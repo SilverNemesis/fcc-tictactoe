@@ -1,6 +1,7 @@
 import React from 'react';
 import TicTacToe from './TicTacToe';
 import Board from './Board';
+import TinyBoard from './TinyBoard';
 
 class App extends React.Component {
     constructor() {
@@ -201,8 +202,22 @@ class App extends React.Component {
         }
 
         const moves = history.map((step, move) => {
+            let style;
+            let border;
+
+            if (move === this.state.stepNumber) {
+                border = ' border-primary';
+                style = {
+                    fontWeight: 'bold'
+                };
+            } else {
+                border = ' border-dark';
+            }
+
             return (
-                <li key={move} className={'list-group-item game-info-item text-center' + (move === this.state.stepNumber ? ' active' : '')} onClick={() => this.jumpTo(move)} style={(move === this.state.stepNumber ? { fontWeight: 'bold' } : {})}>{step.move}</li>
+                <div key={move} className={'border p-1 m-1' + border} style={style} onClick={() => this.jumpTo(move)} data-toggle="tooltip" title={step.move}>
+                    <TinyBoard squares={step.squares} />
+                </div>
             );
         });
 
@@ -228,38 +243,38 @@ class App extends React.Component {
 
         return (
             <div className="container full-screen">
-                <div className="row mt-4 justify-content-center">
-                    <div className="col">
-                        <div className="container">
-                            <div className="row mt-4 justify-content-center">
-                                <div className="text-center">{status}</div>
-                            </div>
+                <div className="container">
+                    <div className="row mt-4 justify-content-center">
+                        <div className="text-center">{status}</div>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="row mt-4 justify-content-center">
+                        <Board squares={current.squares} onClick={(x, y) => this.handleClickBoard(x, y)} />
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="row mt-4 justify-content-center">
+                        <p>{gameState}</p>
+                    </div>
+                    <div className="row mt-4 w-100">
+                        <div className="col-3 text-center">
+                            <button type="button" className="btn btn-primary btn-block" onClick={() => this.handleClickNewGame()}>{this.state.gameInProgess ? 'Restart Game' : 'Start Game'}</button>
                         </div>
-                        <div className="container">
-                            <div className="row mt-4 justify-content-center">
-                                <Board squares={current.squares} onClick={(x, y) => this.handleClickBoard(x, y)} />
-                            </div>
+                        <div className="col-3 text-center">
+                            <button type="button" className="btn btn-primary btn-block" onClick={() => this.handleClickToggleAutoRestart()}>{this.state.autoRestart ? 'Auto-Restart in On' : 'Auto-Restart in Off'}</button>
                         </div>
-                        <div className="container">
-                            <div className="row mt-4 justify-content-center">
-                                <p>{gameState}</p>
-                            </div>
-                            <div className="row mt-4 justify-content-center">
-                                <button type="button" className="btn btn-primary" onClick={() => this.handleClickNewGame()}>{this.state.gameInProgess ? 'Restart Game' : 'Start Game'}</button>
-                            </div>
-                            <div className="row mt-4 justify-content-center">
-                                <button type="button" className="btn btn-primary" onClick={() => this.handleClickToggleAutoRestart()}>{this.state.autoRestart ? 'Auto-Restart in On' : 'Auto-Restart in Off'}</button>
-                            </div>
-                            <div className="row mt-4 justify-content-center">
-                                <button type="button" className="btn btn-primary" onClick={() => this.handleClickToggleAI('X')}>{this.state.X === 'bot' ? 'X is Bot' : 'X is Human'}</button>
-                            </div>
-                            <div className="row mt-4 justify-content-center">
-                                <button type="button" className="btn btn-primary" onClick={() => this.handleClickToggleAI('O')}>{this.state.O === 'bot' ? 'O is Bot' : 'O is Human'}</button>
-                            </div>
+                        <div className="col-3 text-center">
+                            <button type="button" className="btn btn-primary btn-block" onClick={() => this.handleClickToggleAI('X')}>{this.state.X === 'bot' ? 'X is Bot' : 'X is Human'}</button>
+                        </div>
+                        <div className="col-3 text-center">
+                            <button type="button" className="btn btn-primary btn-block" onClick={() => this.handleClickToggleAI('O')}>{this.state.O === 'bot' ? 'O is Bot' : 'O is Human'}</button>
                         </div>
                     </div>
-                    <div className="col">
-                        <ul className="list-group">{moves}</ul>
+                </div>
+                <div className="container">
+                    <div className="row mt-4 justify-content-center">
+                        <div className="d-flex flex-row justify-content-center">{moves}</div>
                     </div>
                 </div>
             </div>
