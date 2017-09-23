@@ -2,7 +2,7 @@
 
 This is the Tic-Tac-Toe Game application that I created as my [Build a Tic Tac Toe Game](https://www.freecodecamp.org/challenges/build-a-tic-tac-toe-game) project at [freeCodeCamp](https://www.freecodecamp.org).
 
-You can check out the running application [here](https://silvernemesis.github.io/fcc-tictactoe/) to see what it does.
+You can check out the [running application](https://silvernemesis.github.io/fcc-tictactoe/) to see what it does.
 
 ## Prerequisites
 
